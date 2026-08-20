@@ -7,14 +7,14 @@
 <meta name="description" content="Sakshi Shelar — Mechanical Engineering student specializing in manufacturing, quality control, and automotive engineering.">
 <style>
   :root{
-    --bg: #0f1210;
-    --bg-soft: #161b18;
-    --panel: #1b211d;
-    --ink: #eef0ea;
-    --ink-dim: #a7b0a5;
-    --line: #2a322b;
-    --accent: #d8b26a;   /* warm brass accent */
-    --accent-soft: #d8b26a33;
+    --bg: #f4f6f8;
+    --bg-soft: #eaedf1;
+    --panel: #ffffff;
+    --ink: #1c2530;
+    --ink-dim: #5b6572;
+    --line: #dde2e8;
+    --accent: #b5502f;   /* burnt copper accent */
+    --accent-soft: #b5502f26;
     --mono: 'JetBrains Mono', 'Courier New', monospace;
     --serif: 'Georgia', 'Iowan Old Style', serif;
   }
@@ -23,13 +23,43 @@
 
   html{ scroll-behavior: smooth; }
 
+  body::before{
+    content: '';
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse 90% 70% at 50% 20%, transparent 40%, #eef1f4 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap, nav, footer{ position: relative; z-index: 1; }
+
   body{
-    background: var(--bg);
+    background:
+      radial-gradient(ellipse 900px 600px at 15% -10%, #dce7ea 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, #f3ded1 0%, transparent 55%),
+      linear-gradient(rgba(28,37,48,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(28,37,48,0.045) 1px, transparent 1px),
+      linear-gradient(180deg, #f6f8fa 0%, #eef1f4 100%);
+    background-size: auto, auto, 44px 44px, 44px 44px, auto;
+    background-attachment: fixed;
     color: var(--ink);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    position: relative;
   }
+
+  /* corner registration marks — blueprint motif, echoed at hero edges */
+  header.hero::before, header.hero::after{
+    content: '+';
+    position: absolute;
+    font-family: var(--mono);
+    color: var(--line);
+    font-size: 20px;
+    opacity: 0.7;
+  }
+  header.hero::before{ top: 28px; left: 20px; }
+  header.hero::after{ top: 28px; right: 20px; }
 
   a{ color: inherit; text-decoration: none; }
 
@@ -38,7 +68,7 @@
   /* NAV */
   nav{
     position: sticky; top:0; z-index: 50;
-    background: rgba(15,18,16,0.85);
+    background: rgba(246,248,250,0.85);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
   }
@@ -68,7 +98,7 @@
     line-height: 1.05;
     margin-bottom: 20px;
   }
-  h1.name em{ font-style: italic; color: var(--accent); }
+  h1.name em{ font-style: normal; color: inherit; }
   .hero p.lead{
     max-width: 560px; color: var(--ink-dim); font-size: 18px; margin-bottom: 34px;
   }
@@ -78,7 +108,7 @@
     font-size: 14px; font-weight: 600; transition: all .2s;
     border: 1px solid var(--line);
   }
-  .btn-primary{ background: var(--accent); color: #14170f; border-color: var(--accent); }
+  .btn-primary{ background: var(--accent); color: #fff; border-color: var(--accent); }
   .btn-primary:hover{ opacity: .85; }
   .btn-ghost:hover{ border-color: var(--accent); color: var(--accent); }
 
@@ -104,7 +134,8 @@
 
   /* SKILLS */
   .skills-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 24px; }
-  .skill-card{ background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 22px; }
+  .skill-card{ background: linear-gradient(160deg, var(--panel), var(--bg-soft)); border: 1px solid var(--line); border-radius: 6px; padding: 22px; transition: border-color .2s, transform .2s; }
+  .skill-card:hover{ border-color: var(--accent); transform: translateY(-2px); }
   .skill-card h3{ font-size: 14px; color: var(--accent); margin-bottom: 12px; letter-spacing: .5px; }
   .tag-list{ display:flex; flex-wrap:wrap; gap: 8px; }
   .tag{ font-family: var(--mono); font-size: 12px; padding: 5px 10px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 4px; color: var(--ink-dim); }
@@ -121,9 +152,12 @@
 
   /* PROJECTS */
   .project-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); gap: 26px; }
-  .project-card{ background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow:hidden; transition: transform .2s, border-color .2s; }
+  .project-card{ background: linear-gradient(160deg, var(--panel), var(--bg-soft)); border: 1px solid var(--line); border-radius: 6px; overflow:hidden; transition: transform .2s, border-color .2s; }
   .project-card:hover{ transform: translateY(-4px); border-color: var(--accent); }
-  .project-thumb{ height: 160px; background: linear-gradient(135deg, var(--bg-soft), var(--panel)); display:flex; align-items:center; justify-content:center; font-family: var(--mono); color: var(--ink-dim); font-size: 13px; }
+  .project-thumb{ height: 190px; overflow:hidden; position:relative; background: linear-gradient(135deg, var(--bg-soft), var(--panel)); }
+  .project-thumb img{ width:100%; height:100%; object-fit:cover; display:block; transition: transform .5s ease; }
+  .project-card:hover .project-thumb img{ transform: scale(1.06); }
+  .project-thumb .ph-label{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family: var(--mono); color: var(--ink-dim); font-size: 13px; }
   .project-body{ padding: 22px; }
   .project-body h3{ font-size: 17px; margin-bottom: 8px; }
   .project-body p{ color: var(--ink-dim); font-size: 14px; margin-bottom: 14px; }
@@ -153,6 +187,23 @@
     html{ scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
   }
+
+
+  .scroll-cue{
+    position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--ink-dim);
+    animation: cueBob 2.4s ease-in-out infinite;
+  }
+  .scroll-cue-line{ width: 1px; height: 34px; background: linear-gradient(var(--accent), transparent); }
+  @keyframes cueBob{
+    0%, 100%{ transform: translateX(-50%) translateY(0); }
+    50%{ transform: translateX(-50%) translateY(8px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .scroll-cue{ animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -174,7 +225,7 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow">Mechanical Engineering Student · Pune, India 🇮🇳</div>
-    <h1 class="name">Sakshi <em>Shelar</em></h1>
+    <h1 class="name">Sakshi Shelar</h1>
     <p class="lead">
       Mechanical Engineering student with hands-on experience in manufacturing and quality
       control at Tata Motors. Passionate about automotive technology and motorsports, aiming
@@ -185,6 +236,10 @@
       <a href="#contact" class="btn btn-ghost">Get in Touch</a>
     </div>
   </div>
+  <a href="#about" class="scroll-cue">
+    <span>Scroll</span>
+    <span class="scroll-cue-line"></span>
+  </a>
 </header>
 
 <section id="about">
@@ -203,9 +258,9 @@
         experimental material studies on polyurethane composite foams.</p>
       </div>
       <div class="stat-block">
-        <div class="stat"><b>3</b><span>Internships / Roles</span></div>
-        <div class="stat"><b>2</b><span>Research Projects</span></div>
-        <div class="stat"><b>9+</b><span>Tools &amp; Technologies</span></div>
+        <div class="stat"><b data-count="3">0</b><span>Internships / Roles</span></div>
+        <div class="stat"><b data-count="2">0</b><span>Research Projects</span></div>
+        <div class="stat"><b data-count="9" data-suffix="+">0</b><span>Tools &amp; Technologies</span></div>
       </div>
     </div>
   </div>
@@ -283,7 +338,7 @@
     <h2 class="section-title">Things I've built</h2>
     <div class="project-grid">
       <div class="project-card">
-        <div class="project-thumb">[ project image ]</div>
+        <div class="project-thumb"><img src="project1.jpg" alt="IoT Based Meter Reading" onerror="this.parentElement.innerHTML='&lt;div class=&quot;ph-label&quot;&gt;[ project1.jpg ]&lt;/div&gt;'"></div>
         <div class="project-body">
           <h3>IoT Based Meter Reading</h3>
           <p>Built an IoT-based smart meter reading system using Arduino and Embedded C/C++ to automate meter data collection. Integrated sensors and communication modules for real-time acquisition and remote monitoring, removing the need for manual readings. Team of 4, mentored by Dr. Anil Badade.</p>
@@ -293,7 +348,7 @@
         </div>
       </div>
       <div class="project-card">
-        <div class="project-thumb">[ project image ]</div>
+        <div class="project-thumb"><img src="project2.jpg" alt="Rigid Polyurethane Foam Study" onerror="this.parentElement.innerHTML='&lt;div class=&quot;ph-label&quot;&gt;[ project2.jpg ]&lt;/div&gt;'"></div>
         <div class="project-body">
           <h3>Experimental Study on Rigid Polyurethane Foams</h3>
           <p>Investigated rigid polyurethane composite foams reinforced with cellulose and melamine additives to improve thermal and structural properties. Analyzed thermal behavior via TGA and DSC, and studied foam microstructure using SEM to determine the optimum formulation. Team of 3, mentored by Dr. Akash Biradar and Dr. Amarjit Kene.</p>
@@ -355,6 +410,29 @@
   }, { threshold: 0.12 });
 
   revealEls.forEach(el => observer.observe(el));
+
+  // Animated stat counters — count up when scrolled into view
+  const counters = document.querySelectorAll('.stat b[data-count]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 900;
+        const start = performance.now();
+        function tick(now){
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(eased * target) + suffix;
+          if(progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => counterObserver.observe(el));
 </script>
 
 </body>
